@@ -1,0 +1,43 @@
+.bg-theme-green {
+  background-color: $theme-green;
+}
+.bg-theme-line {
+  background-color: $theme-lime;
+}
+.bg-theme-light-green {
+  background-color: $theme-light-green;
+}
+.bg-theme-dark-gray {
+  background-color: $theme-dark-gray;
+}
+
+.text-theme-green {
+  color: $theme-green;
+}
+.text-theme-line {
+  color: $theme-lime;
+}
+.text-theme-light-green {
+  color: $theme-light-green;
+}
+.text-theme-dark-gray {
+  color: $theme-dark-gray;
+}
+
+a {
+  &:hover {
+    color: $theme-green;
+  }
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.form-control {
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba($theme-green, 0.25);
+    border-color: $theme-green;
+  }
+}

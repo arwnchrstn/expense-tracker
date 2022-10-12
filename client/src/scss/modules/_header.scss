@@ -1,0 +1,56 @@
+.header {
+  position: relative;
+  min-height: 300px;
+
+  .sidebar-backdrop {
+    position: fixed;
+    background-color: rgba(128, 128, 128, 0.3);
+    width: 100%;
+    height: 100%;
+    z-index: -998;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+
+    &.active {
+      opacity: 1;
+      z-index: 998;
+      transition: opacity 0.3s ease-out;
+    }
+  }
+
+  .sidebar {
+    position: fixed;
+    height: 100vh;
+    width: 350px;
+    background-color: white;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: all 0.3s ease-out;
+
+    &.active {
+      transform: translateX(0);
+      transition: transform 0.3s ease-out;
+    }
+  }
+
+  .form-select,
+  .form-select-sm,
+  .form-control {
+    &:focus {
+      outline: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    .sidebar {
+      width: 75%;
+    }
+  }
+}
