@@ -8,7 +8,7 @@ import getSymbolFromCurrency from "currency-symbol-map";
 import AddTransaction from "./AddTransaction";
 import AddBalance from "./AddBalance";
 import useClearAllState from "../../hooks/useClearAllState";
-import axios from "../../utils/axios";
+import axiosDefault from "../../utils/axios";
 
 const Header = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -32,7 +32,7 @@ const Header = () => {
 
   //handle logout
   const logout = async () => {
-    await axios.get(process.env.REACT_APP_LOGOUT_API);
+    await axiosDefault.get(process.env.REACT_APP_LOGOUT_API);
     clearAllState();
     localStorage.clear("currency");
     navigate("/");
@@ -79,15 +79,15 @@ const Header = () => {
           onClick={() => setSidebarVisible(!sidebarVisible)}
         />
 
-        <h4 className="mb-2">Account Balance:</h4>
         <select
-          className="form-select form-select-sm w-auto mx-auto"
+          className="form-select form-select-sm w-auto mx-auto mb-2"
           value={currencySymbol}
           onChange={changeCurrency}
         >
           <option value="PHP">PHP</option>
           <option value="USD">USD</option>
         </select>
+        <h4 className="m-0">Account Balance:</h4>
         <p className="m-0 fs-2 fw-bold">
           {getSymbolFromCurrency(currencySymbol)} {account?.balance?.toFixed(2)}
         </p>

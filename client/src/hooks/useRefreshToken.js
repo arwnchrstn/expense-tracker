@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import axios from "../utils/axios";
 import { setAccessToken } from "../redux/features/authSlice";
+import axiosDefault from "../utils/axios";
 import useClearAllState from "./useClearAllState";
 import errorHandler from "../utils/errorHandler";
 
@@ -13,7 +14,9 @@ const useRefreshToken = () => {
 
   const refresh = async () => {
     try {
-      const response = await axios.get(process.env.REACT_APP_REFRESH_API);
+      const response = await axiosDefault.get(
+        process.env.REACT_APP_REFRESH_USER_API
+      );
 
       dispatch(setAccessToken(response.data));
       return response.data;
@@ -23,6 +26,7 @@ const useRefreshToken = () => {
         clearAllState();
         navigate("/");
       } else {
+        toast.dismiss();
         errorHandler(error);
       }
     }

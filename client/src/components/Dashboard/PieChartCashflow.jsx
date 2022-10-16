@@ -1,9 +1,11 @@
+import { PropTypes } from "prop-types";
+
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-const PieChartCashflow = () => {
+const PieChartCashflow = ({ cashflow }) => {
   return (
     <>
       <Pie
@@ -15,7 +17,7 @@ const PieChartCashflow = () => {
             },
             title: {
               display: true,
-              text: "Cashflow",
+              text: "Cashflow (Total income and expense)",
               font: {
                 size: 15,
                 family: "'Montserrat', sans-serif",
@@ -25,17 +27,23 @@ const PieChartCashflow = () => {
           }
         }}
         data={{
-          labels: ["Income", "Expenses"],
+          labels: cashflow.map((transaction) => transaction._id),
           datasets: [
             {
-              data: [2000, 1139],
-              backgroundColor: ["#248e38", "#dc3545"]
+              data: cashflow.map((transaction) => transaction.totalAmount),
+              backgroundColor: cashflow.map((transaction) =>
+                transaction._id === "expense" ? "#dc3545" : "#248e38"
+              )
             }
           ]
         }}
       />
     </>
   );
+};
+
+PieChartCashflow.propTypes = {
+  cashflow: PropTypes.array.isRequired
 };
 
 export default PieChartCashflow;

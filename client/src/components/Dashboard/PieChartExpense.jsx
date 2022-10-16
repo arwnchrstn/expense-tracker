@@ -1,9 +1,13 @@
+import { PropTypes } from "prop-types";
+
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
+import { expenseColors } from "../../config/categoryColors";
+
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-const PieChartExpense = () => {
+const PieChartExpense = ({ expenseByCategory }) => {
   return (
     <>
       <Pie
@@ -15,7 +19,7 @@ const PieChartExpense = () => {
             },
             title: {
               display: true,
-              text: "Expense by category",
+              text: "Total expense by category",
               font: {
                 size: 15,
                 family: "'Montserrat', sans-serif",
@@ -25,17 +29,27 @@ const PieChartExpense = () => {
           }
         }}
         data={{
-          labels: ["Cash", "ATM", "Bank Account"],
+          labels: expenseByCategory.map((transaction) => transaction._id),
           datasets: [
             {
-              data: [2000, 1139, 8993],
-              backgroundColor: ["#248e38", "#afd91a", "#abdca7"]
+              data: expenseByCategory.map(
+                (transaction) => transaction.totalAmount
+              ),
+              backgroundColor: expenseByCategory.map((transaction) =>
+                transaction._id === "health care"
+                  ? expenseColors["healthcare"]
+                  : expenseColors[transaction._id]
+              )
             }
           ]
         }}
       />
     </>
   );
+};
+
+PieChartExpense.propTypes = {
+  expenseByCategory: PropTypes.array.isRequired
 };
 
 export default PieChartExpense;

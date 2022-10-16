@@ -7,7 +7,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import useSetSession from "./hooks/useSetSession";
 import { loader } from "./config/loader";
-import axios from "./utils/axios";
+import axiosDefault from "./utils/axios";
 
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const Login = lazy(() => import("./components/Login"));
@@ -16,16 +16,12 @@ const Signup = lazy(() => import("./components/Signup"));
 function App() {
   //get persistent user data using react query based on cookie
   const getUserOnRefresh = () => {
-    return axios.get(process.env.REACT_APP_REFRESH_USER_API);
+    return axiosDefault.get(process.env.REACT_APP_REFRESH_USER_API);
   };
-  const {
-    isLoading,
-    isFetching,
-    data: user
-  } = useQuery("persistent-user", getUserOnRefresh);
+  const { isLoading, data: user } = useQuery("user", getUserOnRefresh);
   const setSession = useSetSession();
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return loader;
   } else {
     if (user.data)

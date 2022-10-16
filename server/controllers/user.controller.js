@@ -26,21 +26,21 @@ const getUserRefresh = async (req, res) => {
           return res
             .cookie("refresh_token_et", "", { ...cookieOptions, maxAge: 0 })
             .status(401)
-            .send("Unauthorized");
+            .json({ message: "Unauthorized" });
 
         return value;
       }
     );
 
     //fetch user data
-    const existingUser = await User.findById(decoded.userId);
+    const existingUser = await User.findById(decoded.userId, "-password");
 
     //check if there is an existing user
     if (!existingUser)
       return res
         .cookie("refresh_token_et", "", { ...cookieOptions, maxAge: 0 })
         .status(404)
-        .send("No user found");
+        .json({ message: "No user found" });
 
     //sign access token
     const accessToken = generateToken.accessToken(existingUser._id);

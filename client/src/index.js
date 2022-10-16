@@ -8,13 +8,24 @@ import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 import App from "./App";
 import "./index.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnmount: false,
+      refetchOnReconnect: true,
+      retry: true
+    }
+  }
+});
+
 root.render(
   <React.StrictMode>
     <ToastContainer theme="colored" />
@@ -22,6 +33,7 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
           <App />
         </QueryClientProvider>
       </Provider>

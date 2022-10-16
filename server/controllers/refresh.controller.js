@@ -14,28 +14,21 @@ module.exports = async (req, res) => {
       return res
         .cookie("refresh_token_et", "", { ...cookieOptions, maxAge: 0 })
         .status(401)
-        .send("Unauthorized");
+        .json({ message: "Unauthorized" });
 
     //verify refresh token
-    const decoded = jwt.verify(
-      refresh_token_et,
-      process.env.REFRESH_SECRET,
-      (error, value) => {
-        if (error)
-          return res
-            .cookie("refresh_token_et", "", { ...cookieOptions, maxAge: 0 })
-            .status(401)
-            .send("Unauthorized");
+    jwt.verify(refresh_token_et, process.env.REFRESH_SECRET, (error, value) => {
+      if (error)
+        return res
+          .cookie("refresh_token_et", "", { ...cookieOptions, maxAge: 0 })
+          .status(401)
+          .json({ message: "Unauthorized" });
 
-        return value;
-      }
-    );
-
-    //sign new token if refresh token is valid
-    const newAccessToken = generateToken.accessToken(decoded.userId);
-
-    //send new access token
-    res.send(newAccessToken);
+      //sign new token if refresh token is valid
+      const newAccessToken = generateToken.accessToken(value.userId);
+      //send new access token
+      res.send(newAccessToken);
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error", error });

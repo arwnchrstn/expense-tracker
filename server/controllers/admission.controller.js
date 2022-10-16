@@ -13,13 +13,17 @@ const login = async (req, res) => {
 
     //check if username and password is empty
     if (!username || !password)
-      return res.status(400).send("Please enter your username and password");
+      return res
+        .status(400)
+        .json({ message: "Please enter your username and password" });
 
     //check if there is an existing user
     const existingUser = await User.findOne({ username });
     //check if credentials are correct
     if (!existingUser)
-      return res.status(404).send("Username/password is incorrect");
+      return res
+        .status(404)
+        .json({ message: "Username/password is incorrect" });
 
     //compare password from the database
     const passwordMatched = await bcrypt.compare(
@@ -28,7 +32,9 @@ const login = async (req, res) => {
     );
     //check is password matched
     if (!passwordMatched)
-      return res.status(404).send("Username/password is incorrect");
+      return res
+        .status(404)
+        .json({ message: "Username/password is incorrect" });
 
     //sign access token and refresh token if credentials are correct
     const accessToken = generateToken.accessToken(existingUser._id);
@@ -37,8 +43,7 @@ const login = async (req, res) => {
     //send user data
     res
       .cookie("refresh_token_et", refreshToken, {
-        ...cookieOptions,
-        maxAge: 60 * 60 * 24 * 7 * 1000
+        ...cookieOptions
       })
       .json(userObject(existingUser, accessToken));
   } catch (error) {
@@ -74,8 +79,7 @@ const register = async (req, res) => {
     //send access token to client, send refresh token to http cookie
     res
       .cookie("refresh_token_et", refresh_token, {
-        ...cookieOptions,
-        maxAge: 60 * 60 * 24 * 7 * 1000
+        ...cookieOptions
       })
       .status(201)
       .json(userObject(createdUser, access_token));

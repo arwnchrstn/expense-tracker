@@ -1,9 +1,13 @@
+import { PropTypes } from "prop-types";
+
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
+import { incomeColors } from "../../config/categoryColors";
+
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-const PieChartIncome = () => {
+const PieChartIncome = ({ incomeByCategory }) => {
   return (
     <>
       <Pie
@@ -15,7 +19,7 @@ const PieChartIncome = () => {
             },
             title: {
               display: true,
-              text: "Income by category",
+              text: "Total income by category",
               font: {
                 size: 15,
                 family: "'Montserrat', sans-serif",
@@ -25,17 +29,25 @@ const PieChartIncome = () => {
           }
         }}
         data={{
-          labels: ["Cash", "ATM", "Bank Account"],
+          labels: incomeByCategory.map((transaction) => transaction._id),
           datasets: [
             {
-              data: [2000, 1139, 8993],
-              backgroundColor: ["#248e38", "#afd91a", "#abdca7"]
+              data: incomeByCategory.map(
+                (transaction) => transaction.totalAmount
+              ),
+              backgroundColor: incomeByCategory.map(
+                (transaction) => incomeColors[transaction._id]
+              )
             }
           ]
         }}
       />
     </>
   );
+};
+
+PieChartIncome.propTypes = {
+  incomeByCategory: PropTypes.array.isRequired
 };
 
 export default PieChartIncome;
