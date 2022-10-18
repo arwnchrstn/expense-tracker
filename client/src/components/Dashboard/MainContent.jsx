@@ -31,7 +31,7 @@ const MainContent = () => {
 
   return (
     <div className="main-content">
-      <div className="container bg-light shadow rounded p-3 pb-5 pb-md-3 mb-0 mb-md-5">
+      <div className="container bg-light shadow rounded py-3 px-4 pb-5 pb-md-3 mb-0 mb-md-5">
         {isLoading && (
           <h5 className="text-center text-theme-green mt-4 mb-3">
             Loading account overview...{" "}

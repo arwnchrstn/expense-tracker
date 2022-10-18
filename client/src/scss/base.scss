@@ -35,7 +35,8 @@ input[type="password"]::-ms-clear {
   display: none;
 }
 
-.form-control {
+.form-control,
+.form-select {
   &:focus {
     box-shadow: 0 0 0 0.25rem rgba($theme-green, 0.25);
     border-color: $theme-green;

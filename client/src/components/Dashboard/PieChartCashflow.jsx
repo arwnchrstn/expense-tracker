@@ -17,7 +17,7 @@ const PieChartCashflow = ({ cashflow }) => {
             },
             title: {
               display: true,
-              text: "Cashflow (Total income and expense)",
+              text: "Cashflow",
               font: {
                 size: 15,
                 family: "'Montserrat', sans-serif",

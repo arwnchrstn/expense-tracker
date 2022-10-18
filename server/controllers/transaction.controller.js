@@ -1,5 +1,4 @@
 const User = require("../models/user.model");
-const cookieOptions = require("../utils/cookie.options");
 const transactionValidator = require("../utils/validators/transaction.validator");
 
 //add balance controller
