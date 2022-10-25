@@ -16,6 +16,7 @@ const registerSchema = Joi.object({
       "string.pattern.base":
         "Username must only contain lowercase letters, numbers, and underscore. No underscore at the beginning and ending of the username.",
       "string.empty": "Username is required",
+      "any.required": "Username is required",
       "string.min": "Username must be at least 5 characters",
       "string.max": "Username must be at maximum of 30 characters only"
     }),
@@ -30,11 +31,13 @@ const registerSchema = Joi.object({
       "string.min":
         "Password must be at least 8 characters and must contain one lowercase letter, one uppercase letter, one number, and one special character",
       "string.max": "Password must be at maximum of 32 characters",
-      "string.empty": "Password is required"
+      "string.empty": "Password is required",
+      "any.required": "Password is required"
     }),
   confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
     "any.only": "Password does not match",
-    "string.empty": "Password does not match"
+    "string.empty": "Password does not match",
+    "any.required": "Password does not match"
   })
 });
 

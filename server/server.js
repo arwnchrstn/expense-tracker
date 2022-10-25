@@ -32,7 +32,7 @@ app.use(express.json());
 //rate limiter
 const rateLimit = rateLimiter({
   windowMs: 45000,
-  max: 5,
+  max: 50,
   message: (req, res) => {
     console.log(req);
     res.status(429).json({

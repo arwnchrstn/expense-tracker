@@ -7,6 +7,7 @@ import getSymbolFromCurrency from "currency-symbol-map";
 
 import AddTransaction from "./AddTransaction";
 import AddBalance from "./AddBalance";
+import DeleteAccount from "./DeleteAccount";
 import useClearAllState from "../../hooks/useClearAllState";
 import axiosDefault from "../../utils/axios";
 
@@ -14,6 +15,7 @@ const Header = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
   const [showAddBalance, setShowAddBalance] = useState(false);
+  const [showDeleteAccount, setShowDeleteAccount] = useState(false);
   const [currencySymbol, setCurrencySymbol] = useState(
     localStorage.getItem("currency") || "PHP"
   );
@@ -61,7 +63,10 @@ const Header = () => {
           <button className="btn btn-outline-success btn-sm rounded-pill my-2 px-4">
             Install App
           </button>
-          <button className="btn btn-outline-success btn-sm rounded-pill my-2 px-4">
+          <button
+            className="btn btn-outline-success btn-sm rounded-pill my-2 px-4"
+            onClick={() => setShowDeleteAccount(true)}
+          >
             Delete Account
           </button>
           <button
@@ -112,6 +117,10 @@ const Header = () => {
         <AddBalance
           showAddBalance={showAddBalance}
           setShowAddBalance={setShowAddBalance}
+        />
+        <DeleteAccount
+          showDeleteAccount={showDeleteAccount}
+          setShowDeleteAccount={setShowDeleteAccount}
         />
       </div>
     </div>
