@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,8 @@ const Header = () => {
   const [showAddTransaction, setShowAddTransaction] = useState(false);
   const [showAddBalance, setShowAddBalance] = useState(false);
   const [showDeleteAccount, setShowDeleteAccount] = useState(false);
+  const [pwaSupport, setPwaSupport] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
   const [currencySymbol, setCurrencySymbol] = useState(
     localStorage.getItem("currency") || "PHP"
   );
@@ -23,6 +25,15 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   const clearAllState = useClearAllState();
   const navigate = useNavigate();
+
+  //Trigger install prompt
+  const handleInstall = (evt) => {
+    evt.preventDefault();
+    if (!installPrompt.promptInstall) {
+      return;
+    }
+    installPrompt.prompt();
+  };
 
   //handle change in currency
   const changeCurrency = (e) => {
@@ -39,6 +50,22 @@ const Header = () => {
     localStorage.clear("currency");
     navigate("/");
   };
+
+  useEffect(() => {
+    const handler = async (e) => {
+      e.preventDefault();
+      setPwaSupport(true);
+      setInstallPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("transitionend", handler);
+  }, []);
+
+  useEffect(() => {
+    if (sidebarVisible) document.body.classList.add("disable-scroll");
+    else document.body.classList.remove("disable-scroll");
+  }, [sidebarVisible]);
 
   return (
     <div className="header bg-theme-green text-white shadow px-3 pt-4 pb-5">
@@ -60,9 +87,14 @@ const Header = () => {
 
           <h5 className="text-theme-green">Hi, {user?.username}!</h5>
 
-          <button className="btn btn-outline-success btn-sm rounded-pill my-2 px-4">
-            Install App
-          </button>
+          {pwaSupport && (
+            <button
+              className="btn btn-outline-success btn-sm rounded-pill my-2 px-4"
+              onClick={handleInstall}
+            >
+              Install App
+            </button>
+          )}
           <button
             className="btn btn-outline-success btn-sm rounded-pill my-2 px-4"
             onClick={() => setShowDeleteAccount(true)}

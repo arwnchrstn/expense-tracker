@@ -34,7 +34,6 @@ const rateLimit = rateLimiter({
   windowMs: 45000,
   max: 50,
   message: (req, res) => {
-    console.log(req);
     res.status(429).json({
       message: `Too many requests. Please try again after ${parseInt(
         (new Date(req.rateLimit.resetTime).getTime() - new Date().getTime()) /
