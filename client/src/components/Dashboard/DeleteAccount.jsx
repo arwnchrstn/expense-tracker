@@ -107,7 +107,15 @@ const DeleteAccount = ({ showDeleteAccount, setShowDeleteAccount }) => {
                   </button>
 
                   <button className="btn btn-danger btn-sm mx-1" type="submit">
-                    Delete
+                    Delete{" "}
+                    {props.isSubmitting && (
+                      <div
+                        className="spinner-border text-light spinner-border-sm ms-1"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    )}
                   </button>
                 </div>
               </fieldset>
