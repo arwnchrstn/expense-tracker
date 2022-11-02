@@ -1,0 +1,30 @@
+.main-content {
+  position: absolute;
+  top: 265px;
+  width: 100%;
+
+  //override bs
+  .nav-link {
+    &.active {
+      background-color: $theme-green !important;
+      color: white !important;
+      font-weight: bold;
+    }
+
+    &:focus,
+    &:hover {
+      color: $theme-green;
+    }
+
+    color: $theme-green;
+  }
+
+  //override bs
+  .nav-item {
+    font-size: clamp(0.8rem, 12px, 2rem);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

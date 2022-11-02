@@ -1,0 +1,8 @@
+@import "~bootstrap/dist/css/bootstrap";
+@import "./scss/variables.scss";
+@import "./scss/base.scss";
+@import "./scss/modules/modules.scss";
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
